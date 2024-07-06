@@ -4,6 +4,7 @@ SNMPRO=public
 
 echo "WorkDir: /var/www/html/mrtg
 Options[_]: bits
+IconDir: /mrtg/
 Forks: 8
 SnmpOptions: retries => 2, timeout => 1
 LogFormat: rrdtool

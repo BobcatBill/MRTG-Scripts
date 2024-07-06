@@ -1,0 +1,152 @@
+###############################################################################
+#
+# interface-errors.template v20030106 by gvolk@gvolk.com
+#
+# The following is a mrtg template that can be used in conjunction with
+# cfgmaker for automatically building configs for monitoring interface
+# errors. 
+#
+# Usage: cfgmaker --if-template=interface-errors.template public@router
+#
+#
+# This template is available under the GNU GPL. For more information, please
+# see http://www.gnu.org/copyleft/gpl.html.
+#
+#
+# Version History: 
+# 20020806 - Initial Release
+# 20030106 - Added GPL Licensing Note 
+#
+
+if($if_ok && $if_speed!=8000 && $if_type!=0 && $if_type!=53 && $if_type!=81 && $if_type!=100 && $if_type!=101 && $if_type!=102 && $if_type!=103 && $if_type!=104) {
+  $target_lines .= <<ECHO;
+
+Target[$target_name]: $if_ref:$router_connect
+SetEnv[$target_name]: MRTG_INT_IP="$if_ip" MRTG_INT_DESCR="$if_snmp_descr"
+ECHO
+
+  if ($directory_name) {
+      $target_lines .= "Directory[$target_name]: $directory_name\n";
+  }
+
+  $target_lines .= <<ECHO;
+MaxBytes[$target_name]: $if_speed
+Title[$target_name]: $html_desc_prefix$html_if_title_desc
+PageTop[$target_name]: <h1>$html_desc_prefix$html_if_title_desc -- $sysname</h1>
+        <div id="sysdetails">
+                <table>
+                        <tr>
+                                <td>System:</td>
+                                <td>$sysname in $html_syslocation</td>
+                        </tr>
+                        <tr>
+                                <td>Maintainer:</td>
+                                <td>$html_syscontact</td>
+                        </tr>
+                        <tr>
+                                <td>Description:</td>
+                                <td>$html_if_description</td>
+                        </tr>
+                        <tr>
+                                <td>ifType:</td>
+                                <td>$html_if_type_desc ($if_type_num)</td>
+                        </tr>
+                        <tr>
+                                <td>ifName:</td>
+                                <td>$html_if_snmp_name</td>
+                        </tr>
+ECHO
+
+  $target_lines .= <<ECHO if defined $if_port_name;
+                        <tr>
+                                <td>Port Name:</td>
+                                <td>$if_port_name</td>
+                        </tr>
+ECHO
+
+  $target_lines .= <<ECHO if defined $if_pp_port_name;
+                        <tr>
+                                <td>Port Name:</td>
+                                <td>$if_pp_port_name</td>
+                        </tr>
+ECHO
+
+  $target_lines .= <<ECHO;
+                        <tr>
+                                <td>Max Speed:</td>
+                                <td>$if_speed_str</td>
+                        </tr>
+ECHO
+
+  $target_lines .= <<ECHO if $if_ip;
+                        <tr>
+                                <td>Ip:</td>
+                                <td>$if_ip ($if_dns_name)</td>
+                        </tr>
+ECHO
+
+  $target_lines .= <<ECHO;
+                </table>
+        </div>
+bb*host[$target_name]: $router_name
+bb*svc[$target_name]: bandwidth
+bb*yellow[$target_name]: 75%
+bb*red[$target_name]: 90%
+
+ECHO
+ } else {
+   $head_lines="";
+   $problem_lines="";
+   $target_lines="";
+   $separator_lines="";
+ }
+
+if($if_ok && $if_speed!=8000 && $if_type!=0 && $if_type!=1 && $if_type!=53 && $if_type!=81 && $if_type!=100 && $if_type!=101 && $if_type!=102 && $if_type!=103 && $if_type!=104 && $if_type!=131 && $if_type!=135) { 
+        my $target_name = $target_name . ".err";
+   
+        $head_lines .= <<ECHO;
+  #  Input/output errors  for $target_name
+  #---------------------------------------------------------------------
+ECHO
+ 
+
+        $target_lines .= <<ECHO;
+ 
+
+Target[$target_name]: ifInErrors.$if_index&ifOutErrors.$if_index:$router_connect
+ECHO
+  if ($directory_name) {
+       $target_lines .= "Directory[$target_name]: $directory_name\n";
+   }
+
+   $target_lines .= <<ECHO;
+YLegend[$target_name]: Error Packets 
+ShortLegend[$target_name]: /s
+Legend1[$target_name]: Error Packets
+Legend2[$target_name]:
+Legend3[$target_name]: Error Packets
+Legend4[$target_name]:
+LegendI[$target_name]: In Err Pkts:&nbsp;
+LegendO[$target_name]: Out Err Pkts:&nbsp;
+MaxBytes[$target_name]: 1000
+Options[$target_name]: growright, nopercent
+bb*host[$target_name]: $router_name
+bb*svc[$target_name]: err
+bb*yellow[$target_name]: .1
+bb*red[$target_name]: .2
+Title[$target_name]: $html_desc_prefix$html_if_title_desc Errors
+PageTop[$target_name]: <h1>$sysname $html_desc_prefix$html_if_title_desc Errors</h1>
+   <TABLE>
+     <TR><TD>System:</TD><TD>$router_name</TD></TR>
+     <TR><TD>Maintainer:</TD><TD>$html_syscontact</TD></TR>
+     <TR><TD>Description:</TD><TD>$html_if_description errors</TD></TR>
+     <TR><TD>Interface Type:</TD><TD>$html_if_type_desc ($if_type_num)</TD></TR>
+     <TR><TD>Interface Name:</TD><TD>$html_if_snmp_name</TD></TR>
+   </TABLE>
+ 
+ECHO
+   
+}
+   
+
+#print $target_lines;

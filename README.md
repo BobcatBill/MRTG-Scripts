@@ -9,7 +9,13 @@ In /etc/apache2/apache2.conf add the following:<br>
 
 ```
 <Directory /var/www/html/mrtg/*/>
-       Options +ExecCGI
-       AddHandler cgi-script .cgi .pl
+        Options +ExecCGI
+        AddHandler cgi-script .cgi .pl
+</Directory>
+
+<Directory /var/www/html/mrtg>
+        Options +ExecCGI
+        AddHandler cgi-script .cgi .pl
+        DirectoryIndex 14all.cgi
 </Directory>
 ```

@@ -10,3 +10,4 @@ In /etc/apache2/apache2.conf add the following:<br>
        Options +ExecCGI<br>
        AddHandler cgi-script .cgi .pl<br>
 </Directory><br>
+

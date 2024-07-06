@@ -21,6 +21,7 @@
 if($if_ok && $if_speed!=8000 && $if_type!=0 && $if_type!=53 && $if_type!=81 && $if_type!=100 && $if_type!=101 && $if_type!=102 && $if_type!=103 && $if_type!=104) {
   $target_lines .= <<ECHO;
 
+noHC[$target_name]: yes
 Target[$target_name]: $if_ref:$router_connect
 SetEnv[$target_name]: MRTG_INT_IP="$if_ip" MRTG_INT_DESCR="$if_snmp_descr"
 ECHO

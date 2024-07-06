@@ -17,7 +17,7 @@ do
 #	cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --ifdesc=descr --ifref=descr --host-template=host.template --if-template=interface-errors.template --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
 #	cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --zero-speed=10000000000 --ifdesc=descr --if-template=interface-errors.template --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
 	if [[ $HOST = *ap0* ]]; then 
-		cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --ifdesc=descr --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
+		cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --ifdesc=descr --if-template=fap.template --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
 	else
 		cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --ifdesc=descr --if-template=interface-errors.template --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
 	fi

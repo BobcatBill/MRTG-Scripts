@@ -18,6 +18,8 @@
 # 20030106 - Added GPL Licensing Note 
 #
 
+if !defined $if_speed { $if_speed = 100000000 }
+
 if($if_ok && $if_speed!=8000 && $if_type!=0 && $if_type!=53 && $if_type!=81 && $if_type!=100 && $if_type!=101 && $if_type!=102 && $if_type!=103 && $if_type!=104) {
   $target_lines .= <<ECHO;
 

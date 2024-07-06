@@ -261,9 +261,9 @@ __VARS__
         next;
     }
          
-    if ( $^O ne "MSWin32" ) {
-        $bbfile =~ s/\..*// unless $ENV{FQDN} eq 'TRUE';
-    }
+    #    if ( $^O ne "MSWin32" ) {
+    #    $bbfile =~ s/\..*// unless $ENV{FQDN} eq 'TRUE';
+    #}
     $bbfile =~ s/\./,/g;
     $bbfile .= ".$svc";
     warn "... bbfile $bbfile\n" if $tron;

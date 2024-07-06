@@ -14,15 +14,15 @@ IPHOSTS=`grep -E "mrtg" /etc/xymon/hosts.cfg | awk '{print $2}'`
 for HOST in $IPHOSTS
 do
 	cfgmaker --subdirs=$HOST --snmp-options=:161:2:2:1:2 --ifdesc=descr --ifref=descr --host-template=host.template --if-template=interface-errors.template --output=$HOST.tmp $SNMPRO@$HOST 2> /dev/null
- 	if [ ! -e /var/www/html/mrtg/$HOSTNAME ]; then
-	        mkdir /var/www/html/mrtg/$HOSTNAME
+ 	if [ ! -e /var/www/html/mrtg/$HOST ]; then
+	        mkdir /var/www/html/mrtg/$HOST
         fi
-	if [ ! -e /var/www/html/mrtg/$HOSTNAME/14all.cgi ]; then
-		cp 14all.cgi /var/www/html/mrtg/$HOSTNAME/
+	if [ ! -e /var/www/html/mrtg/$HOST/14all.cgi ]; then
+		cp 14all.cgi /var/www/html/mrtg/$HOST/
 	fi
-	echo "WorkDir: ." > /var/www/html/mrtg/$HOSTNAME/mrtg.cfg
-	echo "Options[_]: bits" >> /var/www/html/mrtg/$HOSTNAME/mrtg.cfg
-	grep -Ev "WorkDir|Directory" $HOST.tmp >> /var/www/html/mrtg/$HOSTNAME/mrtg.cfg
+	echo "WorkDir: ." > /var/www/html/mrtg/$HOST/mrtg.cfg
+	echo "Options[_]: bits" >> /var/www/html/mrtg/$HOST/mrtg.cfg
+	grep -Ev "WorkDir|Directory" $HOST.tmp >> /var/www/html/mrtg/$HOST/mrtg.cfg
 	grep -v WorkDir $HOST.tmp >> $OUTPUT
 	rm $HOST.tmp
 done

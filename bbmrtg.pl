@@ -37,7 +37,7 @@ my $MRTGCFG = '/var/www/html/mrtg/mrtg.cfg';  # aka '~mrtg/mtrg.cfg'
 
 # Define the base URL of your bb server if necessary.
 #my $MRTGBASEURL = 'http://192.168.1.1';  
-my $MRTGBASEURL = 'http://10.28.3.183/mrtg';
+my $MRTGBASEURL = 'http://192.168.9.12/mrtg';
 
 # Define the path to the MRTG HTML files are.
 my $HTMLDIR = 'mrtg';           
